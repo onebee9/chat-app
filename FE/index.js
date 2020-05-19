@@ -1,12 +1,49 @@
 const socket = io();
 
 let timeoutId; // variable used to keep track of timers
-const usernameContainer = document.getElementById("uname");
-const textArea = document.getElementById("text_box");
-const incomingContainer = document.getElementById("incoming-messages");
+const textArea = document.getElementById("text_box"); //Gets sent chat message from text_area.
+const incomingContainer = document.getElementById("incoming-messages"); //To display "typing" indicator.
+const messageContainer = document.getElementById("messages"); //To hold all message content
+const userLang = window.navigator.userLanguage || window.navigator.language; //get user language
+const username = sessionStorage.getItem("username");
+const room = sessionStorage.getItem("room");
 const incomingDivs = {};
-const onlineUsers = [];
+const userDetails = [];
 
+//send first message with userDetails
+socket.emit("firstMessage", userDetails);
+  //console.log(userDetails);
+
+// get complete userDetails
+socket.on("authenticate", (userDetails) => {
+  console.log(userDetails);
+
+  //Create a div and a paragraph for connected users
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  const connectedUsers = document.createElement("p"); //To append the usernames
+  
+  //insert content
+  connectedUsers.textContent = userDetails.username;
+
+  //add a class for styling
+  connectedUsers.classList.add("message_author");
+
+  //add to connected users to main div
+  usernameDisplay.appendChild(connectedUsers);
+});
+
+// submit message and its sttributes to server
+let chatForm = document.getElementById("chat_form");
+if (chatForm !== null) {
+  chatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let newMessage = e.target.elements.text_box.value; //get message text
+    socket.emit("chat_message", { newMessage, username, room });
+  });
+}
+
+//show who's currently typing
 function showIncomingAlert(username) {
   if (username !== "chabot") {
     if (!incomingDivs[username]) {
@@ -19,102 +56,68 @@ function showIncomingAlert(username) {
   }
 }
 
+//use invisible placeholder text to keep div shape
 function hideIncomingAlert(username) {
   if (username !== "chabot") {
-    incomingDivs[username].textContent = "";
+    incomingDivs[username].textContent = "placeholder text to keep div-shape";
     incomingDivs[username].classList.remove("visible-incoming");
     incomingDivs[username].classList.add("hidden-incoming");
   }
 }
-//get the usernames of the people typing  and send to the server on the "typing" event.
-textArea.addEventListener("input", (event) => {
-  const username = usernameContainer.value;
-  socket.emit("typing", username);
-});
+if (textArea !== null) {
+  textArea.addEventListener("input", (event) => {
+    socket.emit("typing", username);
+  });
+}
 
-//get the usernames of everyone connected and send to the server on the "connectedUsers" event.
-  
-
-// message input field submit
-chat_form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  //get message text
-  let new_message = e.target.elements.text_box.value;
-  // let username = e.target.elements.uname.value;
-  const username = usernameContainer.value;
-  let user_lang = window.navigator.userLanguage || window.navigator.language;
-  // console.log(username);
-  // console.log(user_lang);
-
-  //document.getElementById("sent_msg").innerHTML = new_message;
-  //emitting a message to the server.
-  socket.emit("chat_message", { new_message, username, user_lang });
-  socket.emit("connectedUsers", username);
-});
-// Get selected users for a private or group chat
-// select_user.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   //get available users from checkboxes
-//   let selectedUsers = document.querySelectorAll("input[type=checkbox]:checked");
-//   for (let i = 0; i < selectedUsers.length; i++) {
-//     onlineUsers.push(selectedUsers[i].value);
-//   }
-//   console.log(onlineUsers);
-//   socket.emit("onlineUsers", onlineUsers);
-// });
-
-//recieve user object containing username and userID from the server and print both to screen
-socket.on("userDetails", (userDetails) => {
- console.log(userDetails);
-});
-
-// recieve usernmames of connected clients currently typing to send a message
+// recieve usernmames of connected clients currently typing a message
 socket.on("incoming", (username) => {
   showIncomingAlert(username);
-
-  // reset timeout if this handler is executed again. this is necessary to reset the timeout function
-  if (timeoutId) clearTimeout(timeoutId);
-
-  // execute only the final timeout function after 1second if inactivity
-  timeoutId = setTimeout(() => hideIncomingAlert(username), 1000);
+  if (timeoutId) clearTimeout(timeoutId); // reset timeout if this handler is executed again. this is necessary to reset the timeout function
+  timeoutId = setTimeout(() => hideIncomingAlert(username), 1000); // execute only the final timeout function after 1second if inactivity
 });
 
-
-//output message from chat_message to DOM
-socket.on("message", (msg) => {
+//recieve new messages on the "chat_message" event and output to DOM
+socket.on("NewMessage", (msg) => {
   hideIncomingAlert(msg.username);
   console.log(msg);
-  //creates a new div with the recieved message content everytime it recieves a message, like a normal chat.
-  let messageContainer = document.getElementById("messages");
-  let messageBubble = document.createElement("div");
-  let broadcast_bubble = document.createElement("div");
+
+  const messageBubble = document.createElement("div"); //To append all messages from users
+  let chatMessageAuthor = document.createElement("p"); //To append the username/author for the message
   // let messageTime = document.createElement('p');
-  let messageAuthor = document.createElement("p");
 
-  //add the retrieved content to the created html elements
-  messageBubble.textContent = msg.new_message;
+  messageBubble.textContent = msg.message; //add the retrieved content to the created html elements
   //messageTime.textContent=msg.time;
-  messageAuthor.textContent = msg.username;
-  broadcast_bubble.textContent = msg.message;
+  chatMessageAuthor.textContent = msg.username;
 
-  //syle the message content by appending css style classes
+  //Appending a style class
   messageBubble.classList.add("sent_message");
-  messageAuthor.classList.add("message_author");
-  broadcast_bubble.classList.add("sent_message");
+  chatMessageAuthor.classList.add("message_author");
   //messageTime.classList.add('message_recieved_date');
 
   //add the message and its contents to the div
-  messageContainer.appendChild(messageAuthor);
+  messageContainer.appendChild(chatMessageAuthor);
   messageContainer.appendChild(messageBubble);
-  messageContainer.appendChild(broadcast_bubble);
   //messageContainer.appendChild(messageTime);
 
-  //creates a new div for online users
-  let userArea = document.getElementById("user_panel");
-  let userlist = document.createElement("div");
-  userlist.textContent = msg.id;
-  userArea.appendChild(userlist);
-
   document.getElementById("chat_form").reset();
+});
+
+//recieve broadcast messages on the "message" event and output to DOM
+socket.on("BroadcastMessage", (msg) => {
+  console.log(msg);
+  //To append all broadcast messages from the chatbot
+  const broadcastBubble = document.createElement("div");
+  const broadcastMessageAuthor = document.createElement("p"); //To append the username/author for the message
+  //insert content
+  broadcastBubble.textContent = msg.message;
+  broadcastMessageAuthor.textContent = msg.username;
+
+  //add class for style
+  broadcastBubble.classList.add("sent_message");
+  broadcastMessageAuthor.classList.add("message_author");
+
+  //add to message container div
+  messageContainer.appendChild(broadcastMessageAuthor);
+  messageContainer.appendChild(broadcastBubble);
 });
