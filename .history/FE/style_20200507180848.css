@@ -1,0 +1,126 @@
+* { 
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+}
+body{
+  margin:0;
+  padding:0;
+  font-family:'Roboto', sans-serif;
+
+  background-color:#f4f4f5;
+}
+header{
+  position:fixed;
+  margin:0px;
+  padding:15px;
+  width: 100%;
+  height:60px;
+  background:rgb(4, 27, 74);
+  border-bottom: 1px;
+  border-color:white;
+}
+.left_area h3{
+  color:white;
+  margin:0px;
+  text-transform: capitalize;
+  font-size:22px;
+  font-weight:700px;
+}
+
+#logout_btn{
+padding:5px;
+margin-top:-25px;
+margin-right:40px;
+border-radius:2px;
+float:right;
+}
+#logout_btn:hover{
+  font-size: 100%;
+}
+.sidebar{
+ background:rgb(4, 27, 74);
+ margin-top:60px;
+ padding-top:30px;
+ position:fixed;
+ width:250px;
+ left:0;
+ height: 100%;
+}
+.sidebar img{
+  width: 150px;
+  height:150px;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  margin-left:40px;
+  /*border-radius: 50%;*/
+}
+.sidebar h4{
+  color:#ccc;
+  margin-top: 0;
+  margin-bottom:20px;
+}
+.username{
+  text-align: center;
+}
+.username h4{
+  color:#ccc;
+  margin-top: 0;
+  margin-bottom:20px;
+}
+.input_area{
+		position:fixed;
+		bottom:0;
+    width:100%;
+    margin-left:250px;
+		height:45px;			/* Height of the footer */
+    background:#E0E6F3 ;
+}
+
+.message_area{
+ margin-left:260px;
+ position:relative;
+ padding-top:70px;
+}
+.message_area .sent_message{
+  border-style:solid;
+  border-radius:10px;
+  border-color:rgb(4, 27, 74);
+  width: 900px;
+  padding:20px;
+  margin-bottom:5px;
+}
+.message_area .recieved_message{
+  background-color:rgb(4, 27, 74);
+  color:#fff;
+  border-style:solid;
+  border-radius:10px;
+  width: 20%;
+  padding:20px;
+  float:right;
+
+}
+.message_area .message_recieved_date{
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+.message_area .message_author{
+  font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
+.input_area #text_box{
+  width:800px;
+  margin-left:30px;
+  margin-top:5px;
+  height:35px;			/* Height of the footer */
+  background:#fff ;
+}
+#send_msg_button{
+  padding:12px;
+  text-transform: uppercase;
+  font-size: 10px;
+  border-radius: 5px;
+  margin:0px; 
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatwit|Chatrooms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!--header area start-->
+   <header>
+     <div class ="left_area">
+      <h3>BaeChat</h3>
+    </div>
+      <button id="logout_btn">Log out</button>
+   </header>
+    <!--header area end-->
+      <!--sidebar area start-->
+      <div class="sidebar">
+        <div class="profile_pic">
+        <!--- <img src="#" alt="Profile picture">--> 
+        </div>
+        <div class="username">
+          <h4>Furo</h4>
+        </div>
+      </div>
+       <!--sidebar area end-->
+        <!--message body start-->
+      <div id="message_area" class="message_area">
+        </div>
+      <div class="recieved_message">
+          <p class="recieved_message_text">welcome to the second chat</p>
+          <p class="recieved_message_date">12:10</p>
+        </div>
+      </div>
+       <!--message body end-->
+        <!--message send area start-->
+      <div class="input_area">
+        <form id="chat_form">
+          <input id="text_box" type="text" placeholder=" Type your message here">
+          <button id="send_msg_button" type="submit">Send</button>
+        </form>
+       <!--proposed icon <a href="#"><i class="fas fa-paper-plane"></i><span></span></a>-->
+      </div>
+       <!--message send area end-->
+    <script
+      src="https://kit.fontawesome.com/d3626c5c10.js"
+      crossorigin="anonymous">
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

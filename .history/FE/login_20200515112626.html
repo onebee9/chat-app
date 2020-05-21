@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+
+<style>
+  form {
+  border: 3px solid #f1f1f1;
+  display:inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #d9534f;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.container1 {
+  padding: 16px;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<h2>ChatWit</h2>
+<div class="container">
+  <div class="row">
+      <div class="col-md-6 offset-md-3 col-sm-12">
+<form id="myform">
+  <div class="container1">
+    <label for="uname"><b>Username</b></label>
+    <input id="username" name="username" type="text" placeholder="Enter Username"  required>    
+    <button id="postData">Login</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
+<script src="users.js"></script>
+</body>
+</html>

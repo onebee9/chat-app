@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatwit|Chatrooms</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      .message_container{
+        border-color:#280000;
+        border-style:solid;
+      }
+      .message_author{
+        font-size: 10px;
+        margin-bottom: 0px;
+        color:#280000;
+        font-weight: bold;
+      }
+      .sent_message{
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+      #send_msg_button{
+        margin-top: 5px;
+        float: right;
+        font-size:10px;
+        background-color: #d9534f;
+        color:white;
+        padding:5px;
+        width: 100%;
+      }
+      .form-control{
+        margin-top: 0px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-12">
+          <div id="status"></div>
+          <div id="chat">
+            <br>
+            <input type="text"id="username" class="form-control"placeholder="Enter username...">
+            <div class="message_container">
+              <div id="messages" class="card-block"></div>
+            </div>
+            <form id="chat_form">
+            <textarea id="text_box"class=""placeholder="Type message here" ></textarea>
+            <button id="send_msg_button" type="submit">Send</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
