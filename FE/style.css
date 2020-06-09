@@ -1,70 +1,159 @@
+@import "fonts/gilroy/stylesheet.css";
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+body,html {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f5;
+    font-family: 'Gilroy',sans-serif;
+    background-color: #efefef;
+    line-height: 1.5;
+}
+/*font weight classess**/
+.fw-300{font-weight: 300;}
+.fw-400{font-weight: 400;}
+.fw-500{font-weight: 500;}
+.fw-600{font-weight: 600;}
+.fw-700{font-weight: 700;}
+.fw-800{font-weight: 800;}
+
+/*font size classess **/
+.fs-large-medium{font-size:18px;}
+.fs-medium{font-size:14px;}
+.fs-small{font-size:12px;}
+.fs-xsmall{font-size:10px;}
+#container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100vh;
+}
+#sidePanel{
+    background-color:rgb(23, 27, 28);
+    overflow: scroll;
+    margin-bottom: 0px;
+    flex-basis: auto;
+    flex-shrink: 0; 
+}
+#panelGroup{
+    margin:25px;
+}
+header{
+    margin-bottom: 12px;
+}
+h2{
+    color: whitesmoke;
+    font-weight: 200;
+    font-size: 30px;
+    padding-left: 0px;
+}
+#userList{
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
-.input_container {
-    background-color: #ffff;
-    color: black;
-    border-radius: 1em;
-    padding: 1em;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
-}
-
-.container {
-    background-color: #ffff;
-    color: black;
-    border-radius: 1em;
-    padding: 1em;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
-}
-
-.sent_message {
-    width: auto;
-    margin-bottom: 5px;
-    font-size: 10px;
-}
-
-.container .message_recieved_date {
-    font-size: 8px;
+#roomList{
+    
     margin-bottom: 10px;
-    float: left;
 }
-
-.container .message_author {
-    font-size: 10px;
+h4{
+    color: white;
+    font-size: 18px;
+}
+ul{
+    list-style-position: inside;
+    color:rgb(206, 205, 205);
+    font-weight: lighter;
     margin-top: 10px;
-    font-weight: bolder;
+}
+li{
+    padding:5px;
+    font-size: 16px;
 }
 
+#roomList li{
+    list-style: none;
+    padding-left: 0px;
+}
+#userList li{
+    padding-left: 0px;
+}
+#profileArea{
+    background-color: black;
+    display:flex;
+    padding:8px;
+    margin-top: 100px;
+   
+}
+#profileArea #info{
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    /* padding-left: 6px;
+    padding-top: 8px; */
+    padding:5px 30px 5px 10px;
+    margin-right: 10px;
+}
+img {
+    border: 1px;
+    border-radius: 100px; 
+    padding: 5px; 
+    width: 50px;
+    height:50px;
+  }
+#chatArea{
+ margin: 20px;
+ display:flex;
+ width:900px;
+ flex-direction:column;
+
+}
+#messageHeader{
+    margin-top: 20px;
+    margin-left: 25px;
+    }
+#messageBody{
+    border:1px solid rgb(206, 205, 205);
+    /* min-height: 400px; */
+    margin:5px 25px 25px 25px;
+    padding: 20px;
+    overflow-y: scroll;
+    min-height: 400px;
+}
+#messageBody #messageDetails{
+    display:flex;
+}
+#messageBody .messageText{
+    font-size: 12px;
+    font-weight: 300;
+    display: inline;
+}
+#messageBody .messageTime{
+    display: inline;
+    font-size:10px;
+    font-weight: 700;
+    padding-top: 3px;
+    padding-left: 3px;
+}
+#messageBody .author{
+    display: inline;
+    font-size: 13px;
+    font-weight: 700;
+}
+#inputArea{
+    border:1px solid rgb(206, 205, 205);
+    height: 20%;
+    margin: 20px 20px 0px 25px; 
+}
 input[type=text] {
-    width: 80%;
     padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
+    min-height:100px;
     border: 1px solid #ccc;
-    box-sizing: border-box;
-}
+    border-radius: 4px;
+    margin:5px 30px 25px 25px;
+    width: 850px;
+  }
 
-#send_msg_button {
-    padding: 12px;
-    text-transform: uppercase;
-    font-size: 10px;
-    border-radius: 5px;
-}

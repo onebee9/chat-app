@@ -2,7 +2,7 @@
 let date_recieved = new Date().toLocaleTimeString();
 
 //create a message object to hold all message attributes and export so we can use the function on the server side.
-module.exports = function formatMessage(username, msg,userID) {
+ function formatMessage(username, msg,userID) {
     let sentMessageObj = {
         username,
         message: msg,
@@ -13,3 +13,12 @@ module.exports = function formatMessage(username, msg,userID) {
     return sentMessageObj;
 };
 
+
+function getCurrentUserId(userId){
+    return userDetails.find(user => userDetails.id === userId);
+}
+
+module.exports = {
+    getCurrentUserId,
+    formatMessage
+};

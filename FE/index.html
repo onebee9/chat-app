@@ -15,7 +15,7 @@
 
     <style>
       button {
-        background-color: #d9534f;
+        background-color:rgb(24, 26, 28);;
         color: white;
         padding: 12px 20px;
         margin: 8px 0;
@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-md-6 offset-md-3 col-sm-12">
 
-          <form id="getInfo" action="chat.html">
+          <form id="getInfo" method="POST">
             <div class="form-group">
               <label for="uname"><b>Username</b></label>
               <input
@@ -46,8 +46,10 @@
                 <label for="rooms"><b>Select Room:</b></label>
                 <select class="form-control" id="room" name="room">
                 <option selected>Available rooms</option>
-                <option value="friends">Friends</option>
-                <option value="family">Family</option>
+                <option value="friends">Travel & Tourism</option>
+                <option value="family">Shopping</option>
+                <option value="friends">Expat</option>
+                <option value="family">Fishing</option>
                 </select>
               </div>
               <button type="submit">Login</button>
