@@ -1,4 +1,3 @@
-const userDetails_endpoint = "http://localhost:3000/api/userDetails";
 if (getInfo) {
   getInfo.addEventListener("submit", async (e) => {
     e.preventDefault();

@@ -14,11 +14,6 @@ let date_recieved = new Date().toLocaleTimeString();
 };
 
 
-function getCurrentUserId(userId){
-    return userDetails.find(user => userDetails.id === userId);
-}
-
 module.exports = {
-    getCurrentUserId,
     formatMessage
 };

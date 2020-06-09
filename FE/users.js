@@ -1,5 +1,6 @@
 let date_recieved = new Date().toLocaleTimeString();
-module.exports=function formatUsers(msg,userId) {
+
+const formatUsers = (msg,userId) => {
   let sentMessageObj = {
     username:msg.username,
     message: msg.newMessage,
@@ -9,3 +10,17 @@ module.exports=function formatUsers(msg,userId) {
   return sentMessageObj;
 };
 
+const userList = (id,username,room) => {
+  let ConnectedUser = {id,username,room};
+  return ConnectedUser;
+};
+
+const getCurrentUserId = (userId) =>{
+  return userDetails.find(user => userDetails.id === userId);
+};
+
+module.exports = {
+  formatUsers,
+  userList,
+  getCurrentUserId
+};
