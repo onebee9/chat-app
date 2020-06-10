@@ -1,118 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chatwit|Chatrooms</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-    <style>
-        .message_container {
-            border-color: #280000;
-            border-style: solid;
-        }
-        
-        .message_author {
-            font-size: 10px;
-            margin-bottom: 0px;
-            color: #280000;
-            font-weight: bold;
-        }
-        
-        .sent_message {
-            font-size: 12px;
-            margin-bottom: 5px;
-        }
-        
-        #send_msg_button {
-            margin-top: 5px;
-            float: right;
-            font-size: 10px;
-            background-color: #d9534f;
-            color: white;
-            padding: 5px;
-            width: 100%;
-        }
-        
-        .input_area {
-            margin-top: 2px;
-            width: 100%;
-            font-size: medium;
-        }
-        .username_Display{
-            display: grid;
-            font-size: 12px;
-            color:black;
-            font-weight: bold;
-        }
-        .incoming-messages {
-            margin:10px;
-            display:grid;
-        }
-        .hidden-incoming {
-            display: block;
-            color:white;
-            font-size: 12px;
-        }
-        
-        .visible-incoming {
-            display: grid;
-            font-size: 12px;
-        }
-        
-        input::placeholder,
-        textarea::placeholder {
-            font-size: 10px;
-        }
-        .btn{
-            background-color: #d9534f;
-            color:azure;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 col-sm-12">
-              
-                <div id="chat">
-                    <br>
-                    <div id = "incoming-messages" class="incoming-messages">
-                        <p id="incoming" class="hidden-incoming"></p>
-                    </div>
-                    <div class="message_container">
-                        <div id="messages" class="card-block"></div>
-                    </div>
-                    <form id="chat_form">
-                       <br> <textarea id="text_box" class="form-control" placeholder=""></textarea>
-                        <button type="submit" id="send_msg_button">Send</button>
-                    </form>
-                    
-                    <div id="user_panel"></div>
-                      <br/>
-                      <form id="select_user">
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="selected user 1">
-                        <label for="vehicle1"> I have a bike</label><br>
-                        <input type="checkbox" id="vehicle2" name="vehicle2" value="selected user 2">
-                        <label for="vehicle2"> I have a car</label><br>
-                        <input type="checkbox" id="vehicle3" name="vehicle3" value="selected user 3">
-                        <label for="vehicle3"> I have a boat</label><br><br>
-                        <br><button type="submit">Select</button>
-                      </form>
-                    </div>
-                </div>
-                <div id ="usernameDisplay" class ="col" style="margin-top: 60px; border-color: #280000;
-                border-style: solid; height: 120px;">
-                </div>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>TheTalk</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="leftPanel">
+        <div id="leftPanelGroup">
+          <div id="leftHeader">
+            <h2>The<span class="fw-700">Talk</span></h2>
+          </div>
+          <div id="userList">
+            <h4>Users</h4>
+            <div id = "onlineUsersDisplay"></div>
+          </div>
+          <div id="rooms">
+            <h4>Rooms</h4>
+            <div id ="AvailableRooms">
+              <p>Travel & Tourism</p>
+              <p>Shopping</p>
+              <p>Expat</p>
+              <p>Fishing</p>
             </div>
+          </div>
+          <div id="profile">
+              <div id="info">
+                <p id = "profileName" class="fs-medium profileName"></p>
+                <p id="description" class="fs-small fw-400 fivePx"> Profile</p>
+            
+            </div>
+          </div>
         </div>
+      </div>
+      <div id="rightPanel">
+        <div id="rightPanelGroup">
+          <div id="messageHeader">
+            <div id="titleBar">
+              <p id ="room" class="fw-600 fs-large-medium fivePx"></p>
+              <p id="memberCount" class="fs-xsmall fw-300">36 Members</p>
+            </div>
+            <div id="incoming-messages" class="incoming-messages">
+              <p id="incoming" class="hidden-incoming"></p>
+            </div>
+          </div>
+          <div id="messageBody">
+            <div id="messageGroup">
+              <div id="messageProfilePic"></div>
+              <div id="messageDetails"></div>
+            </div>
+          </div>
+          <div id="messageBox">
+            <form id="chatForm">
+              <textarea id="message" name="message" rows="4" autofocus>
+              </textarea>
+              <button id="msgbutton" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha256-ijqLssetA1NMNjZ+w1zaUafQQLm4IW5OoM8O+4tatME=" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="index.js"></script>
-</body>
-
+    <script src="index.js" defer></script>
+  </body>
 </html>

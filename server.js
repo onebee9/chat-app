@@ -1,61 +1,62 @@
-const express = require('express');
-const path = require('path');
-const socketio = require('socket.io');
-const http = require('http');
-const PORT = 3000;
-const qs = require('qs');
-const { MongoClient } = require('mongodb');
-const formatMessage = require('./FE/formatMessage.js');
-const formatUsers = require('./FE/users.js')
-
+const express = require("express");
+const path = require("path");
+const http = require("http");
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
-const chatbot = 'chabot';
-const uri = "mongodb+srv://ibifuro:<password>@onebee9-6shml.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
+const io = require ("socket.io")(server);
+const bodyParser = require("body-parser");
+const PORT = 3000;
+const chatbot = "Chabot";
 
+//get external modules
+const { formatMessage} = require("./FE/formatMessage.js");
+const { formatUsers, userList} = require("./FE/users.js");
 
-//set static folder
-app.use(express.static(path.join(__dirname + '/FE/')));
+app.use(express.static(path.join(__dirname + "/FE/")));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+let userData = [];
 
+io.on("connection", (socket) => {
+  
+  const userId = socket.id; 
 
-io.on('connection', socket => {
-    // get message time and Id;
-    const userId = socket.id;
-    console.log(usercount++);
+  //recieves the first message from the client
+  socket.on("userJoin", (userDetails) => {
+    let user = userList(userId, userDetails.username, userDetails.room);
+    userData.push(user);
+    io.emit("onlineUsers", userData);
+    io.emit("newUser", user);
+  });
 
-    //recieve first message from user
-    socket.on("firstMessage",(userDetails)=>{
-        userDetails.id = userId;
-            io.emit('authenticate', userDetails);
-    });
+  socket.emit(
+    "BroadcastMessage",
+    formatMessage(chatbot, "Welcome to your first message!")
+  );
 
-    //single client - send to just one client i.e a personal notification
-    socket.emit('BroadcastMessage', formatMessage(chatbot,'welcome to your first message!'));
+  socket.emit(
+    "BroadcastMessage",
+    formatMessage(chatbot, "A user has joined the chat!")
+  );
 
-    //Broadcast when a user connects( everyone except the person that sent the broadcast/person that the broadcast concerns).
-    io.emit('BroadcastMessage', formatMessage(chatbot, 'user has joined the chat!'));
+  socket.on("disconnect", () => {
+  //removes disconnected users from the array 
+    let leftUser = userData.indexOf(userId);
+    if (leftUser >= 0) userData.splice(leftUser, 1);
+    io.emit("removeUser", userId);
+    io.emit(
+      "BroadcastMessage",
+      formatMessage(chatbot, "A user has left the chat")
+    );
+  });
 
+  socket.on("typing", (username) => {
+    io.emit("incoming", username);
+  });
 
-    //runs when client disconnects
-    socket.on('disconnect', () => {
-        // this function is used to send a message to every single person in the chat.
-        io.emit('BroadcastMessage', formatMessage(chatbot, 'a user has left the chat'));
-    });
-
-    //listen for usernames on the typing event and send it back on the incoming event
-    socket.on('typing', (username) => {
-        io.emit('incoming', username);
-    });
-
-    //listen for chat message
-    socket.on('chat_message', (msg) => {
-        io.emit('NewMessage',formatUsers(msg,userId));
-        // users.foow1.lemit('message', (msg));
-    });
-
+  socket.on("chat_message", (msg) => {
+    io.emit("NewMessage", formatUsers(msg, userId));
+  });
 });
-
 
 server.listen(PORT, () => console.log(`listening on port ${PORT}`));

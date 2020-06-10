@@ -1,14 +1,13 @@
-const socket = io();
+if (getInfo) {
+  getInfo.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      localStorage.setItem("username",document.getElementById("username").value);
+      localStorage.setItem("room", document.getElementById("room").value);
 
-// send first message to identify users
-let getInfo = document.getElementById("getInfo");
-getInfo.addEventListener("submit", (e) => {
-  e.preventDefault();
-  
-  sessionStorage.setItem("username", document.getElementById("username").value);
-  sessionStorage.setItem("room", document.getElementById("room").value);
-
-  window.location.href='http://localhost:3000/chat.html';
-});
-
-
+      window.location.href = `${window.location.href}chat.html`;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+}
