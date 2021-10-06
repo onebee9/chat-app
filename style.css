@@ -54,7 +54,7 @@ body {
 
 /*quick adjustments*/
 .fivePx {
-  padding-top: 5px;
+  margin-top: 5px;
 }
 
 #container {
@@ -93,6 +93,9 @@ body {
   color: rgb(206, 205, 205);
   margin-bottom: 10px;
 }
+.activeRoom{
+  font-weight: 700;
+}
 #leftPanel h4 {
   color: white;
   font-size: 18px;
@@ -104,7 +107,7 @@ body {
   padding: 5px 0px;
   font-size: 14px;
 }
-#leftPanel #userList a {
+#leftPanel a {
   color: rgb(206, 205, 205);
   margin-top: 10px;
   padding: 5px 0px;
@@ -241,6 +244,10 @@ textarea::placeholder {
 }
 #msgbutton {
   float: right;
+}
+.RoomHighlight{
+  color: white;
+  font-weight: 600;
 }
 /** Beginning of css for login page**/
 
